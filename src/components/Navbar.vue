@@ -1,9 +1,9 @@
 <template>
-  <div class="navbar">
+  <div class="navbar netflix-font-sans-regular">
     <div class="navbar-container">
       <div class="menu-navigation">
         <a href="#" class="menu-logo">
-          <img src="../assets/netflix-logo.png" />
+          <img src="../assets/images/netflix-logo.png" />
         </a>
         <ul class="navigation-list">
           <li class="navigation-menu">
@@ -42,7 +42,11 @@
                 <a href="#">
                   <span class="profile">
                     <div class="img-wrapper">
-                      <img src="../assets/profile.png" alt="" srcset="" />
+                      <img
+                        src="../assets/images/profile.png"
+                        alt=""
+                        srcset=""
+                      />
                     </div>
                   </span>
                 </a>
