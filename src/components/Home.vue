@@ -73,27 +73,41 @@
           <div class="track-container">
             <div class="hover-field">
               <div class="carousel-slider">
-                <div class="inner-carousel">
-                  <div class="carousel-content">
-                    <div
-                      v-for="(nr, index) in new_release.list"
-                      :key="index"
-                      class="slider-item"
-                    >
-                      <div class="item-card">
-                        <div class="item-card-container">
-                          <div class="item-card-title">
-                            <a href="#">
-                              <div class="item-card-box">
-                                <img :src="nr.Poster" alt="" />
-                              </div>
-                            </a>
+                <span class="handle handle-prev">
+                  <font-awesome-icon
+                    class="indicator-icon"
+                    :icon="['fas', 'chevron-left']"
+                  />
+                </span>
+                <div class="carousel">
+                  <div class="inner-carousel">
+                    <div class="carousel-content">
+                      <div
+                        v-for="(nr, index) in new_release.list"
+                        :key="index"
+                        class="slider-item"
+                      >
+                        <div class="item-card">
+                          <div class="item-card-container">
+                            <div class="item-card-title">
+                              <a href="#">
+                                <div class="item-card-box">
+                                  <img :src="nr.Poster" alt="" />
+                                </div>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <span class="handle handle-next">
+                  <font-awesome-icon
+                    class="indicator-icon"
+                    :icon="['fas', 'chevron-right']"
+                  />
+                </span>
               </div>
             </div>
           </div>
@@ -115,6 +129,9 @@ export default {
   },
   created() {
     this.getData();
+  },
+  mounted() {
+    this.ini();
   },
   methods: {
     getData() {
@@ -139,6 +156,40 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    ini() {
+      document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+          const prev = document.querySelector(".handle-prev");
+          const next = document.querySelector(".handle-next");
+          const carousel = document.querySelector(".carousel");
+          const track = document.querySelector(".carousel-content");
+          let width = carousel.offsetWidth;
+          let index = 0;
+          window.addEventListener("resize", function() {
+            width = carousel.offsetWidth;
+          });
+          next.addEventListener("click", function(e) {
+            e.preventDefault();
+            index = index + 1;
+            prev.classList.add("show");
+            track.style.transform = "translateX(" + index * -width + "px)";
+            if (track.offsetWidth - index * width < index * width) {
+              next.classList.add("hide");
+            }
+          });
+          prev.addEventListener("click", function() {
+            index = index - 1;
+            next.classList.remove("hide");
+            if (index === 0) {
+              prev.classList.remove("show");
+            }
+            track.style.transform = "translateX(" + index * -width + "px)";
+          });
+        },
+        false
+      );
     },
   },
 };
